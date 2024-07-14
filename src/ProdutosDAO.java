@@ -88,6 +88,29 @@ public class ProdutosDAO {
                 e.printStackTrace();
             }
         }
-    }    
+    }
+
+    public void listarProdutosVendidos(){
+        conn = new conectaDAO().connectDB();
+        
+        try{
+            String sql = "SELECT * FROM produtos WHERE status = ?";
+            prep = conn.prepareStatement(sql);
+            prep.setString(1, "Vendido");
+            
+            int rowsAffected = prep.executeUpdate();            
+        } 
+        catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao vender produto: " + erro.getMessage());
+        } 
+        finally {
+            try {
+                if (prep != null) prep.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }        
+        }
+    }
 }
 
